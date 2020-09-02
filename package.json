@@ -13,7 +13,8 @@
     "@react-native-community/cameraroll": "^4.0.0",
     "react": "16.13.1",
     "react-native": "0.63.2",
-    "react-native-camera": "^3.37.0"
+    "react-native-camera": "^3.37.0",
+    "react-native-image-picker": "^2.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",

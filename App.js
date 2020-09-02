@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { View, Text, StatusBar, StyleSheet, TouchableOpacity, Modal, Image, PermissionsAndroid, Platform } from 'react-native';
 import { RNCamera } from 'react-native-camera'
 import CameraRoll from '@react-native-community/cameraroll'
+import ImagePicker from 'react-native-image-picker';
 
 export default function camera() {
   const [type, setType] = useState(RNCamera.Constants.Type.back)
@@ -40,7 +41,7 @@ export default function camera() {
       console.log('SALVO COM SUCESSO: ' + res)
     })
     .catch((err)=>{
-      console.log('ERROR AO SALVAR: ----- ' + err)
+      console.log('ERROR AO SALVAR: ' + err)
     })
 
 
@@ -50,6 +51,31 @@ export default function camera() {
   function toggleCam(){
     setType(type === RNCamera.Constants.Type.back ? RNCamera.Constants.Type.front : RNCamera.Constants.Type.back)
   }
+
+  function openAlbum(){
+    const options = {
+      title: 'Selecione uma foto',
+      chooseFromLibraryButtonTitle: 'Buscar foto do album..',
+      noData: true,
+      mediaType: 'photo'
+    };
+
+    ImagePicker.launchImageLibrary(options, (response) => {
+
+      if(response.didCancel){
+        console.log('Image Picker cancelado...');
+      }else if(response.error){
+        console.log('Gerou algum erro: ' + response.error);
+      }else{
+        setCapturedPhoto(response.uri);
+        setOpen(true);
+      }
+
+    })
+
+
+  }
+
 
 
 
@@ -81,7 +107,7 @@ export default function camera() {
               <Text>Tirar Foto</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => {}}
+              onPress={openAlbum}
               style={styles.capture}
             >
               <Text>Album</Text>
